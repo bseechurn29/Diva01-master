@@ -5,6 +5,7 @@
   <!-- Add Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+
 </head>
 <body class="bg-gradient-to-r from-blue-50 to-indigo-100 font-sans">
 
@@ -14,10 +15,10 @@
 
   <!-- Form Section -->
   <div class="bg-white shadow-md rounded-lg p-8">
-    <form th:action="@{/flights/save}" method="post">
+    <form id="flightForm" th:action="@{/flights/save}" method="post">
       <div class="mb-4">
         <label for="flightNo" class="block text-gray-700 font-medium">Flight Number</label>
-        <input type="text" id="flightNo" name="flightNo" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+        <input type="text" id="flightNo" name="flightNo" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" >
       </div>
 
       <div class="mb-4">
@@ -27,28 +28,28 @@
 
       <div class="mb-4">
         <label for="departureAirport" class="block text-gray-700 font-medium">Departure Airport</label>
-        <input type="text" id="departureAirport" name="departureAirport" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+        <input type="text" id="departureAirport" name="departureAirport" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" >
       </div>
 
       <div class="mb-4">
         <label for="arrivalAirport" class="block text-gray-700 font-medium">Arrival Airport</label>
-        <input type="text" id="arrivalAirport" name="arrivalAirport" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+        <input type="text" id="arrivalAirport" name="arrivalAirport" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" >
       </div>
 
       <div class="mb-4">
         <label for="scheduledDeparture" class="block text-gray-700 font-medium">Scheduled Departure</label>
-        <input type="datetime-local" id="scheduledDeparture" name="scheduledDeparture" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+        <input type="datetime-local" id="scheduledDeparture" name="scheduledDeparture" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" >
       </div>
 
 
       <div class="mb-4">
         <label for="scheduledArrival" class="block text-gray-700 font-medium">Scheduled Arrival</label>
-        <input type="datetime-local" id="scheduledArrival" name="scheduledArrival" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+        <input type="datetime-local" id="scheduledArrival" name="scheduledArrival" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" >
       </div>
 
       <div class="mb-4">
         <label for="aircraftCode" class="block text-gray-700 font-medium">Aircraft Code</label>
-        <input type="text" id="aircraftCode" name="aircraftCode" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+        <input type="text" id="aircraftCode" name="aircraftCode" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" >
       </div>
 
       <div class="mb-4">
@@ -70,4 +71,64 @@
 </div>
 
 </body>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('flightForm').addEventListener('submit', function(event) {
+      // Prevent the form from submitting to handle validation
+      event.preventDefault();
+
+      // Get form values
+      const flightNo = document.getElementById('flightNo').value.trim();
+      const flightId = document.getElementById('flightId').value.trim();
+      const departureAirport = document.getElementById('departureAirport').value.trim();
+      const arrivalAirport = document.getElementById('arrivalAirport').value.trim();
+      const scheduledDeparture = document.getElementById('scheduledDeparture').value;
+      const scheduledArrival = document.getElementById('scheduledArrival').value;
+      const aircraftCode = document.getElementById('aircraftCode').value.trim();
+      const status = document.getElementById('status').value;
+
+      // 1. Check if all required fields are filled in
+      if (!flightNo || !flightId || !departureAirport || !arrivalAirport || !scheduledDeparture || !scheduledArrival || !aircraftCode || !status) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      // 2. Flight Number Validation (should be a string with letters only)
+      const flightNoPattern = /^[A-Za-z0-9]+$/;
+
+      if (!flightNoPattern.test(flightNo)) {
+        alert('Flight Number must be a valid string (letters and digits only, no spaces).');
+        return;
+      }
+
+      // 3. Flight ID Validation (should be a number)
+      if (!/^\d+$/.test(flightId)) {
+        alert('Flight ID must be a valid positive integer.');
+        return;
+      }
+
+      // 4. Aircraft Code Validation (should be a number)
+      if (!/^\d+$/.test(aircraftCode)) {
+        alert('Aircraft Code must be a valid positive integer.');
+        return;
+      }
+
+      // 5. Scheduled Departure and Arrival Validation
+      if (new Date(scheduledArrival) <= new Date(scheduledDeparture)) {
+        alert('Scheduled arrival must be after scheduled departure.');
+        return;
+      }
+
+      // 6. Status Validation (check for valid option)
+      if (!['Scheduled', 'On Time', 'Delayed', 'Cancelled'].includes(status)) {
+        alert('Please select a valid status.');
+        return;
+      }
+
+      // If all validations pass, submit the form
+      this.submit(); // Submitting the form after all checks are passed
+    });
+  });
+</script>
+
 </html>

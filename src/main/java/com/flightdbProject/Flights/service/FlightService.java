@@ -17,10 +17,7 @@ public class FlightService {
         this.flightRepository = flightRepository;
     }
 
-//    public Page<Flight> getFlightsPage(int page, int size) {
-//        Pageable pageable = PageRequest.of(page, size);
-//        return flightRepository.findAll(pageable);
-//    }
+
     // Method to fetch paginated and sorted flights
     public Page<Flight> getFlightsPage(int page, int size) {
         // Sort flights by flightId in ascending order
