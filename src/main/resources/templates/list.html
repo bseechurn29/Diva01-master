@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Flight List</title>    <!-- Add Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-blue-50 to-indigo-100 font-sans">
+<!-- Navbar Section -->
+<nav class="bg-indigo-600 text-white p-4">
+    <div class="container mx-auto flex items-center justify-between">
+        <!-- Logo -->
+        <div class="flex items-center">
+            <span class="text-2xl font-bold">Flight Management</span>
+        </div>
+        <div class="space-x-6">
+            <a href="/flights" class="hover:text-indigo-300">Home</a>
+            <a href="/about" class="hover:text-indigo-300">About</a>
+            <a href="/flights/list" class="hover:text-indigo-300">Flight List</a>
+            <a href="/flights/add" class="hover:text-indigo-300">Add Flight</a>
+        </div>
+    </div>
+</nav>
+<div class="container mx-auto p-8">    <!-- Header Section --> <h1
+        class="text-3xl md:text-4xl font-semibold text-center text-indigo-700 mb-8">Flight List</h1>
+    <!-- Table Section -->
+    <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+        <table class="min-w-full table-auto text-sm text-gray-800">
+            <thead class="bg-indigo-600 text-white">
+            <tr>
+                <th class="px-4 py-2 text-left">Flight ID</th>
+                <th class="px-4 py-2 text-left">Flight Number</th>
+                <th class="px-4 py-2 text-left">Scheduled Departure</th>
+                <th class="px-4 py-2 text-left">Scheduled Arrival</th>
+                <th class="px-4 py-2 text-left">Departure Airport </th>
+                <th class="px-4 py-2 text-left">Arrival Airport </th>
+                <th class="px-4 py-2 text-left">Status</th>
+                <th class="px-4 py-2 text-left">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="flight : ${flights}" class="border-b hover:bg-gray-100">
+                <td class="px-4 py-2" th:text="${flight.flightId}"></td>
+                <td class="px-4 py-2" th:text="${flight.flightNo}"></td>
+                <td class="px-4 py-2" th:text="${flight.scheduledDeparture}"></td>
+                <td class="px-4 py-2" th:text="${flight.scheduledArrival}"></td>
+                <td class="px-4 py-2" th:text="${flight.departureAirport}"></td>
+                <td class="px-4 py-2" th:text="${flight.arrivalAirport}"></td>
+                <td class="px-4 py-2" th:text="${flight.status}"></td>
+                <td class="px-4 py-2 text-center space-x-2">
+                    <form th:action="@{/flights/delete/{id}(id=${flight.flightId})}" method="post" class="inline-block">
+                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none">Delete</button>
+                    </form>
+                    <!-- Add Button (You can link to a separate form or modal for adding flights) -->
+                    <a href="/flights/add" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none">Edit</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="flex justify-between items-center mt-6">
+        <a th:href="@{/flights/list(page=${flights.number - 1}, size=${flights.size})}" th:if="${flights.hasPrevious()}"
+           class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"> Previous </a>
+
+        <span class="text-gray-700 font-medium">Page <span th:text="${flights.number + 1}"></span>
+            of <span th:text="${flights.totalPages}"></span> </span>
+        <a th:href="@{/flights/list(page=${flights.number + 1}, size=${flights.size})}" th:if="${flights.hasNext()}"
+                class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"> Next </a>
+    </div>
+
+
+    </div>
+</body>
+</html>
