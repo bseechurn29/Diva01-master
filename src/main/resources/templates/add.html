@@ -70,19 +70,19 @@
                     <option value="Cancelled">Cancelled</option>
                 </select>
             </div>
-            <div id="customAlert" style="display:none;">
-                <div id="alertMessage" class="alert-box">
-                    <span id="alertText"></span>
-
-                </div>
+            <!-- Custom Alert -->
+            <div id="customAlert" style="display:none;" class="flex items-center justify-between bg-red-200 text-red-800 p-2 rounded mt-4">
+                <span id="alertText"></span>
             </div>
 
+            <!-- Confirmation Message -->
+            <div id="confirmationMessage" class="hidden bg-green-200 text-green-800 p-2 rounded mt-4">
+                Flight saved successfully!
+            </div>
 
-
+            <!-- Form Buttons -->
             <div class="flex justify-between">
-                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Save
-                    Flight
-                </button>
+                <button type="submit" id="saveButton" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Save Flight</button>
                 <a href="/flights" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">Cancel</a>
             </div>
         </form>
@@ -93,10 +93,14 @@
 
 
 <script>
-
     document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('flightForm').addEventListener('submit', function (event) {
-            // Prevent the form from submitting to handle validation
+        const form = document.getElementById('flightForm');
+        const saveButton = document.getElementById('saveButton');
+        const customAlert = document.getElementById('customAlert');
+        const alertText = document.getElementById('alertText');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+
+        form.addEventListener('submit', function (event) {
             event.preventDefault();
 
             // Get form values
@@ -115,7 +119,7 @@
                 return;
             }
 
-            // 2. Flight Number Validation (should be a string with letters only)
+            // 2. Flight Number Validation (should be a string with letters and digits)
             const flightNoPattern = /^[A-Za-z0-9]+$/;
             if (!flightNoPattern.test(flightNo)) {
                 showCustomAlert('Flight Number must be a valid string (letters and digits only, no spaces).');
@@ -140,30 +144,27 @@
                 return;
             }
 
-            // 6. Status Validation (check for valid option)
+            // 6. Status Validation
             if (!['Scheduled', 'On Time', 'Delayed', 'Cancelled'].includes(status)) {
                 showCustomAlert('Please select a valid status.');
                 return;
             }
 
-            // If all validations pass, submit the form
-            this.submit(); // Submitting the form after all checks are passed
-        });
+            // Show the confirmation message
+            confirmationMessage.classList.remove('hidden');
 
 
-            // Function to show the custom alert with a message
-            function showCustomAlert(message) {
-                document.getElementById('alertText').innerText = message;
-                document.getElementById('customAlert').style.display = 'flex'; // Show the custom alert
-            }
+            setTimeout(function () {
+                confirmationMessage.classList.add('hidden');
+                form.submit();
+            }, 5000);
 
 
-
-
-
-
-
-
+        function showCustomAlert(message) {
+            alertText.innerText = message;
+            customAlert.style.display = 'flex';
+        }
+    });
     });
 
 </script>
