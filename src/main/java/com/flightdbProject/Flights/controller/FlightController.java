@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -41,6 +38,11 @@ public class FlightController {
     public String showAddFlightForm(Model model) {
         model.addAttribute("flight", new Flight());
         return "add";  // returns the add.html template
+    }
+   @PostMapping("/flights/delete/{id}")
+    public String deleteFlight(@PathVariable Long id) {
+        flightService.deleteFlight(id); // Delete the flight by ID
+        return "redirect:/flights/list"; // Redirect to the flight list page after deletion
     }
 
     // POST: Handle form submission and save the flight

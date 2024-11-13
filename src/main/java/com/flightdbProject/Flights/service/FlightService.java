@@ -27,5 +27,8 @@ public class FlightService {
     public void save(Flight flight) {
         flightRepository.save(flight);
     }
+   public void deleteFlight(Long id) {
+    flightRepository.deleteById(id);  // Assuming you are using Spring Data JPA
+}
 
 }
