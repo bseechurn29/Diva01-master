@@ -28,17 +28,16 @@ public class FlightService {
     public void save(Flight flight) {
         flightRepository.save(flight);
     }
-   public void deleteFlight(Long id) {
-    flightRepository.deleteById(id);  // Assuming you are using Spring Data JPA
-}
+
 
     public void deleteFlight(Long id) {
         flightRepository.deleteById(id);  // Assuming you are using Spring Data JPA
     }
 
-    public Page<Flight> searchFlightsByFlightNo(String flightNo, int page, int size) {
-        return flightRepository.findByFlightNoContainingIgnoreCase(flightNo, PageRequest.of(page, size));
+    public Page<Flight> searchFlightsByFlightId(Long flightId, int page, int size) {
+        return flightRepository.findByFlightId(flightId, PageRequest.of(page, size));
     }
+
 
 
 }

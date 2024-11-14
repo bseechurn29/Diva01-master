@@ -7,5 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface  FlightRepository extends JpaRepository<Flight, Long> {
 
-    Page<Flight> findByFlightNoContainingIgnoreCase(String flightNo, Pageable pageable);
+
+        Page<Flight> findByFlightId(Long flightId, Pageable pageable);
+
+
 }
