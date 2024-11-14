@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - DIVA Flight Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<!--    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">-->
+</head>
+<body class="bg-gray-100">
+
+<!-- Navigation (Placeholder for your header) -->
+<div th:replace="fragments/header :: navbar"></div>
+
+<!-- Hero Section -->
+<section class="w-full h-80 relative bg-gradient-to-b from-blue-500 to-indigo-700">
+    <img src="https://images.pexels.com/photos/15857789/pexels-photo-15857789/free-photo-of-air-china-airplane.jpeg" alt="airplane" class="object-cover w-full h-full opacity-70" />
+
+    <!-- Overlay and Content -->
+    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-center text-white">
+        <div class="space-y-4">
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-widest uppercase transform scale-110 opacity-0 animate-fadeIn">Welcome Aboard!</h1>
+            <p class="text-xl sm:text-2xl font-semibold animate-fadeIn delay-200">Your journey to seamless flight management begins here.</p>
+
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-16 bg-white">
+    <div class="container mx-auto px-6 md:px-12">
+        <h1 class="text-4xl font-semibold text-indigo-600 mb-8 text-center">About DIVA Airways</h1>
+        <div class="flex flex-col md:flex-row gap-8">
+            <div class="md:w-1/2">
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    Welcome to DIVA Flight Management, your go-to platform for managing flight schedules, bookings, and more. Whether you're an aviation enthusiast or a professional in the field, our platform provides easy-to-use tools to streamline the process of managing flights.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    Our goal is to simplify flight management by offering an intuitive and user-friendly interface. With features like flight lists, flight addition, and status tracking, we help users stay organized and up to date with their aviation needs.
+                </p>
+            </div>
+            <div class="md:w-1/2 bg-gradient-to-t from-indigo-500 to-indigo-700 p-8 text-white rounded-lg shadow-lg">
+                <h2 class="text-2xl font-semibold mb-4">Our Mission</h2>
+                <p class="text-lg text-gray-200 leading-relaxed mb-4">
+                    Our mission is to empower organizations and individuals in the aviation industry by providing them with the tools they need to effectively manage and track flight data. We are committed to continually improving our platform to meet the evolving needs of the aviation community.
+                </p>
+                <h3 class="text-xl font-semibold mt-8 mb-2">Contact Us</h3>
+                <p class="text-lg text-gray-200 leading-relaxed mb-4">
+                    If you have any questions or feedback, feel free to reach out to us. We value your input and are always eager to improve.
+                </p>
+                <p class="text-lg text-gray-200">
+                    Email: <a href="mailto:support@flightmanagement.com" class="text-indigo-300 hover:underline">support@flightmanagement.com</a><br>
+                    Phone: <span class="text-indigo-300">+230 56734502</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+
+</body>
+</html>

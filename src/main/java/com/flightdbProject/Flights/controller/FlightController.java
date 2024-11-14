@@ -41,7 +41,13 @@ public class FlightController {
     @GetMapping("flights")
     public String homepage(Model model) {
         model.addAttribute("flight", new Flight());
-        return "home";  // returns the add.html template
+        return "home";  
+    }
+
+    @GetMapping("about")
+    public String aboutpage(Model model) {
+        model.addAttribute("flight", new Flight());
+        return "about";
     }
 
 
