@@ -38,7 +38,7 @@ public class Flight {
     @Column(name = "aircraft_code")
     private String aircraftCode;
 
-    // Getters and Setters
+
     public Long getFlightId() {
         return flightId;
     }

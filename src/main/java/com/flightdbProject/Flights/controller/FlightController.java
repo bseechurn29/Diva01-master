@@ -22,22 +22,22 @@ public class FlightController {
     public String listFlights(Model model,
                               @RequestParam(value = "page", defaultValue = "0") int page,
                               @RequestParam(value = "size", defaultValue = "150") int size,
-                              @RequestParam(value = "flightNo", required = false) String flightNo) {
+                              @RequestParam(value = "flightId", required = false) Long flightId) {
 
         Page<Flight> flightsPage;
-
-        if (flightNo != null && !flightNo.isEmpty()) {
-            // Search flights by flightNo
-            flightsPage = flightService.searchFlightsByFlightNo(flightNo, page, size);
+        if (flightId != null) {
+            // Search flights by flightId
+            flightsPage = flightService.searchFlightsByFlightId(flightId, page, size);
         } else {
             // List all flights if no search term is provided
             flightsPage = flightService.getFlightsPage(page, size);
         }
 
         model.addAttribute("flights", flightsPage);
-        model.addAttribute("flightNo", flightNo); // To keep the search query after redirect
+        model.addAttribute("flightId", flightId); // To keep the search query after redirect
         return "list";
     }
+
     @GetMapping("flights")
     public String homepage(Model model) {
         model.addAttribute("flight", new Flight());
