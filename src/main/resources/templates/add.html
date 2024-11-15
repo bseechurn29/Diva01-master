@@ -2,10 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Add Flight</title>
-    <!-- Add Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-
 </head>
 <body class="bg-gradient-to-r from-blue-50 to-indigo-100 font-sans">
 <div th:replace="fragments/header :: navbar"></div>
@@ -46,7 +43,6 @@
                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
             </div>
 
-
             <div class="mb-4">
                 <label for="scheduledArrival" class="block text-gray-700 font-medium">Scheduled Arrival</label>
                 <input type="datetime-local" id="scheduledArrival" name="scheduledArrival"
@@ -70,18 +66,19 @@
                     <option value="Cancelled">Cancelled</option>
                 </select>
             </div>
-            <!-- Custom Alert -->
+
+
             <div id="customAlert" style="display:none;"
                  class="flex items-center justify-between bg-red-200 text-red-800 p-2 rounded mt-4">
                 <span id="alertText"></span>
             </div>
 
-            <!-- Confirmation Message -->
+
             <div id="confirmationMessage" class="hidden bg-green-200 text-green-800 p-2 rounded mt-4">
                 Flight saved successfully!
             </div>
 
-            <!-- Form Buttons -->
+
             <div class="flex justify-between">
                 <button type="submit" id="saveButton"
                         class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Save Flight
@@ -91,15 +88,11 @@
         </form>
     </div>
 </div>
-
 <div th:replace="fragments/footer :: footer"></div>
 </body>
-
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('flightForm');
-        const saveButton = document.getElementById('saveButton');
         const customAlert = document.getElementById('customAlert');
         const alertText = document.getElementById('alertText');
         const confirmationMessage = document.getElementById('confirmationMessage');
@@ -107,7 +100,6 @@
         form.addEventListener('submit', function (event) {
             event.preventDefault();
 
-            // Get form values
             const flightNo = document.getElementById('flightNo').value.trim();
             const flightId = document.getElementById('flightId').value.trim();
             const departureAirport = document.getElementById('departureAirport').value.trim();
@@ -117,32 +109,29 @@
             const aircraftCode = document.getElementById('aircraftCode').value.trim();
             const status = document.getElementById('status').value;
 
-            // 1. Check if all required fields are filled in
+
             if (!flightNo || !flightId || !departureAirport || !arrivalAirport || !scheduledDeparture || !scheduledArrival || !aircraftCode || !status) {
                 showCustomAlert('Please fill in all required fields.');
                 return;
             }
 
-            // 2. Flight Number Validation (should be a string with letters and digits)
             const flightNoPattern = /^[A-Za-z0-9]+$/;
             if (!flightNoPattern.test(flightNo)) {
                 showCustomAlert('Flight Number must be a valid string (letters and digits only, no spaces).');
                 return;
             }
 
-            // 3. Flight ID Validation (should be a number)
+
             if (!/^\d+$/.test(flightId)) {
                 showCustomAlert('Flight ID must be a valid positive integer.');
                 return;
             }
 
-            // 4. Aircraft Code Validation (should be a number)
             if (!/^\d+$/.test(aircraftCode)) {
                 showCustomAlert('Aircraft Code must be a valid positive integer.');
                 return;
             }
 
-            // 5. Scheduled Departure and Arrival Validation
             if (new Date(scheduledArrival) <= new Date(scheduledDeparture)) {
                 showCustomAlert('Scheduled arrival must be after scheduled departure.');
                 return;
@@ -154,14 +143,13 @@
                 return;
             }
 
-            // Show the confirmation message
             confirmationMessage.classList.remove('hidden');
 
 
             setTimeout(function () {
                 confirmationMessage.classList.add('hidden');
                 form.submit();
-            }, 5000);
+            }, 3000);
 
 
             function showCustomAlert(message) {

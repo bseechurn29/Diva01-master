@@ -8,12 +8,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "flights", schema = "bookings")
-
 public class Flight {
-
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "flight_id")
     private Long flightId;
 

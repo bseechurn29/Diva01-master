@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Edit Flight</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-blue-50 to-indigo-100 font-sans">
+<div th:replace="fragments/header :: navbar"></div>
+<div class="container mx-auto p-8">
+    <h1 class="text-3xl md:text-4xl font-semibold text-center text-indigo-700 mb-8">Edit Flight</h1>
+
+    <form id="flightForm" th:action="@{/flights/update}" method="post" class="bg-white p-6 rounded-lg shadow-md">
+        <input type="hidden" name="flightId" th:value="${flight.flightId}"/>
+
+        <div class="mb-4">
+            <label for="flightId" class="block text-lg font-medium text-gray-700">Flight ID</label>
+            <input type="text" id="flightId" name="flightId" th:value="${flight.flightId}"
+                   class="mt-2 p-2 w-full border border-gray-300 rounded-lg" readonly/>
+        </div>
+
+        <div class="mb-4">
+            <label for="flightNo" class="block text-lg font-medium text-gray-700">Flight Number</label>
+            <input type="text" id="flightNo" name="flightNo" th:value="${flight.flightNo}"
+                   class="mt-2 p-2 w-full border border-gray-300 rounded-lg" required/>
+        </div>
+
+        <div class="mb-4">
+            <label for="scheduledDeparture" class="block text-lg font-medium text-gray-700">Scheduled Departure</label>
+            <input type="datetime-local" id="scheduledDeparture" name="scheduledDeparture"
+                   th:value="${flight.scheduledDeparture}" class="mt-2 p-2 w-full border border-gray-300 rounded-lg"
+                   required/>
+        </div>
+
+        <div class="mb-4">
+            <label for="scheduledArrival" class="block text-lg font-medium text-gray-700">Scheduled Arrival</label>
+            <input type="datetime-local" id="scheduledArrival" name="scheduledArrival"
+                   th:value="${flight.scheduledArrival}" class="mt-2 p-2 w-full border border-gray-300 rounded-lg"
+                   required/>
+        </div>
+
+        <div class="mb-4">
+            <label for="departureAirport" class="block text-lg font-medium text-gray-700">Departure Airport</label>
+            <input type="text" id="departureAirport" name="departureAirport" th:value="${flight.departureAirport}"
+                   class="mt-2 p-2 w-full border border-gray-300 rounded-lg" required/>
+        </div>
+
+        <div class="mb-4">
+            <label for="arrivalAirport" class="block text-lg font-medium text-gray-700">Arrival Airport</label>
+            <input type="text" id="arrivalAirport" name="arrivalAirport" th:value="${flight.arrivalAirport}"
+                   class="mt-2 p-2 w-full border border-gray-300 rounded-lg" required/>
+        </div>
+
+        <div class="mb-4">
+            <label for="aircraftCode" class="block text-lg font-medium text-gray-700">Aircraft Code</label>
+            <input type="text" id="aircraftCode" name="aircraftCode" th:value="${flight.aircraftCode}"
+                   class="mt-2 p-2 w-full border border-gray-300 rounded-lg" required/>
+        </div>
+
+
+        <div class="mb-4">
+            <label for="status" class="block text-lg font-medium text-gray-700">Status</label>
+            <select id="status" name="status" th:value="${flight.status}"
+                    class="mt-2 p-2 w-full border border-gray-300 rounded-lg" required>
+                <option value="Scheduled">Scheduled</option>
+                <option value="On Time">On Time</option>
+                <option value="Delayed">Delayed</option>
+                <option value="Cancelled">Cancelled</option>
+            </select>
+        </div>
+
+        <button type="submit" id="editButton"
+                class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none">Update
+            Flight
+        </button>
+        <div id="confirmationMessage" class="hidden bg-green-200 text-green-800 p-2 rounded mt-4">
+            Flight updated successfully!
+        </div>
+
+    </form>
+</div>
+
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('flightForm');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            confirmationMessage.classList.remove('hidden');
+            setTimeout(function () {
+                confirmationMessage.classList.add('hidden');
+                form.submit();
+            }, 3000);
+        });
+    });
+</script>
+</html>

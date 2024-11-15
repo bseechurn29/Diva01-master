@@ -19,9 +19,8 @@ public class FlightService {
     }
 
 
-    // Method to fetch paginated and sorted flights
+    // for sortinggg
     public Page<Flight> getFlightsPage(int page, int size) {
-        // Sort flights by flightId in ascending order
         return flightRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Order.asc("flightId"))));
     }
 
@@ -31,13 +30,20 @@ public class FlightService {
 
 
     public void deleteFlight(Long id) {
-        flightRepository.deleteById(id);  // Assuming you are using Spring Data JPA
+        flightRepository.deleteById(id);
     }
 
     public Page<Flight> searchFlightsByFlightId(Long flightId, int page, int size) {
         return flightRepository.findByFlightId(flightId, PageRequest.of(page, size));
     }
 
+    public Flight findFlightById(Long flightId) {
+        return flightRepository.findById(flightId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid flight Id: " + flightId));
+    }
 
+    public void updateFlight(Flight flight) {
+        flightRepository.save(flight);
+    }
 
 }
